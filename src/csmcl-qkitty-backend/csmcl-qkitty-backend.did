@@ -1,3 +1,24 @@
+// Candid Interface Definition File (.did)
+// This file defines the public API of your canister that other canisters and frontends can call
+
+// Define a custom record type for our quantum kitty's response
+// This maps to the QuantumResponse struct in our Rust code
+type QuantumResponse = record {
+    greeting: text;      // The personalized greeting message as text (Candid's string type)
+    quantum_state: text; // The current quantum state as text
+    energy_level: nat8;  // Energy level from 1-10 as an 8-bit unsigned integer
+};
+
+// Define the service interface - this is the contract your canister exposes
 service : {
+    // Simple greeting function that takes text and returns text
+    // The "query" keyword means this is a read-only function (faster, doesn't modify state)
     "greet": (text) -> (text) query;
+    
+    // Quantum greeting function that takes text (name) and returns our custom QuantumResponse
+    // Also marked as a query function for fast execution
+    "quantum_greet": (text) -> (QuantumResponse) query;
+    
+    // Note: If we had functions that modified state, they would be defined without "query"
+    // Example: "store_interaction": (text) -> ();
 }
