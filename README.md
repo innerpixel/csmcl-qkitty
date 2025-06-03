@@ -1,61 +1,182 @@
-# `csmcl-qkitty`
+# 🐱 CSMCL Quantum Kitty
 
-Welcome to your new `csmcl-qkitty` project and to the Internet Computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
+A playful quantum-inspired Internet Computer Protocol (ICP) application featuring a kitty that exists in multiple quantum states simultaneously!
 
-To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
+![Quantum Kitty](./src/csmcl-qkitty-frontend/assets/logo.svg)
 
-To learn more before you start working with `csmcl-qkitty`, see the following documentation available online:
+## 🌟 About The Project
 
-- [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
-- [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
-- [Rust Canister Development Guide](https://internetcomputer.org/docs/current/developer-docs/backend/rust/)
-- [ic-cdk](https://docs.rs/ic-cdk)
-- [ic-cdk-macros](https://docs.rs/ic-cdk-macros)
-- [Candid Introduction](https://internetcomputer.org/docs/current/developer-docs/backend/candid/)
+CSMCL Quantum Kitty is an experimental ICP application that demonstrates the basics of canister development using Rust for the backend and JavaScript for the frontend. The quantum kitty responds with different quantum-themed greetings and exists in various quantum states with fluctuating energy levels.
 
-If you want to start working on your project right away, you might want to try the following commands:
+## 🚀 Features
+
+- **Quantum-Inspired Greetings**: The kitty responds with different quantum-themed messages
+- **Quantum States**: The kitty exists in different states (Superposition, Entangled, Coherent, etc.)
+- **Energy Levels**: Visual representation of the kitty's quantum energy (1-10)
+- **Modern UI**: Clean, responsive interface with animations and visual feedback
+
+## 🛠️ Built With
+
+- **Backend**: Rust + Candid on Internet Computer Protocol
+- **Frontend**: JavaScript with lit-html templating
+- **Styling**: CSS with animations and gradients
+
+## 🏁 Getting Started
+
+### Prerequisites
+
+- [dfx](https://internetcomputer.org/docs/current/developer-docs/build/install-upgrade-remove) (version 0.27.0 recommended)
+- [Rust](https://www.rust-lang.org/tools/install) with wasm32-unknown-unknown target
+- [Node.js](https://nodejs.org/) (version 16 or higher)
+
+### Installation
 
 ```bash
-cd csmcl-qkitty/
-dfx help
-dfx canister --help
-```
+# Clone the repository
+git clone https://github.com/yourusername/csmcl-qkitty.git
+cd csmcl-qkitty
 
-## Running the project locally
+# Install Rust target for WebAssembly
+rustup target add wasm32-unknown-unknown
 
-If you want to test your project locally, you can use the following commands:
+# Start the local replica
+dfx start --clean --background
 
-```bash
-# Starts the replica, running in the background
-dfx start --background
-
-# Deploys your canisters to the replica and generates your candid interface
+# Deploy the project
 dfx deploy
 ```
 
-Once the job completes, your application will be available at `http://localhost:4943?canisterId={asset_canister_id}`.
+## 🐾 Waking Up The Quantum Kitty
 
-If you have made changes to your backend canister, you can generate a new candid interface with
+The quantum kitty starts in a dormant state. Here are ways to wake it up and make it meow differently:
 
-```bash
-npm run generate
+### 1. Change the Greeting Messages
+
+To make the kitty meow with different messages, modify the `quantum_greet` function in `src/csmcl-qkitty-backend/src/lib.rs`:
+
+```rust
+// Add or modify the greeting options
+let greeting = match random_value {
+    0 => format!("Meow there, {}! The quantum kitty purrs in your dimension!", name),
+    1 => format!("*quantum paw tap* Hello {}! I exist in multiple states simultaneously!", name),
+    2 => format!("Greetings {}! This kitty has folded through spacetime to meet you!", name),
+    // Add a new greeting here
+    3 => format!("Quantum whiskers twitching... Ah, it's {}! Welcome to my resonance field!", name),
+    // And another one
+    _ => format!("*Quantum purr* {} has awakened the cosmic kitty consciousness!", name),
+};
 ```
 
-at any time. This is recommended before starting the frontend development server, and will be run automatically any time you run `dfx deploy`.
+### 2. Add New Quantum States
 
-If you are making frontend changes, you can start a development server with
+Expand the possible quantum states by modifying the states array:
 
-```bash
-npm start
+```rust
+// Add more quantum states
+let states = [
+    "Superposition", 
+    "Entangled", 
+    "Coherent", 
+    "Resonating", 
+    "Folded",
+    "Quantum Tunneling",  // New state
+    "Wave Collapsed"      // Another new state
+];
 ```
 
-Which will start a server at `http://localhost:8080`, proxying API requests to the replica at port 4943.
+### 3. Add Persistent Memory
 
-### Note on frontend environment variables
+Make the kitty remember interactions by adding stable storage:
 
-If you are hosting frontend code somewhere without using DFX, you may need to make one of the following adjustments to ensure your project does not fetch the root key in production:
+```rust
+use ic_cdk::storage;
+use std::cell::RefCell;
 
-- set`DFX_NETWORK` to `ic` if you are using Webpack
-- use your own preferred method to replace `process.env.DFX_NETWORK` in the autogenerated declarations
-  - Setting `canisters -> {asset_canister_id} -> declarations -> env_override to a string` in `dfx.json` will replace `process.env.DFX_NETWORK` with the string in the autogenerated declarations
-- Write your own `createActor` constructor
+#[derive(CandidType, Deserialize, Default)]
+struct KittyMemory {
+    interaction_count: u64,
+    last_visitor: Option<String>,
+}
+
+thread_local! {
+    static MEMORY: RefCell<KittyMemory> = RefCell::new(KittyMemory::default());
+}
+
+#[ic_cdk::update]
+fn record_visit(name: String) {
+    MEMORY.with(|memory| {
+        let mut memory = memory.borrow_mut();
+        memory.interaction_count += 1;
+        memory.last_visitor = Some(name);
+    });
+}
+
+#[ic_cdk::query]
+fn get_kitty_memory() -> KittyMemory {
+    MEMORY.with(|memory| (*memory.borrow()).clone())
+}
+```
+
+### 4. Add Time-Based Behavior
+
+Make the kitty behave differently based on time of day:
+
+```rust
+// Get the current hour (0-23)
+let now = SystemTime::now().duration_since(UNIX_EPOCH).unwrap();
+let seconds_in_day = now.as_secs() % 86400;
+let hour = (seconds_in_day / 3600) as u8;
+
+// Morning, afternoon, evening, night behaviors
+let time_behavior = if hour >= 5 && hour < 12 {
+    "The quantum kitty is energetic and playful in the morning light!"
+} else if hour >= 12 && hour < 18 {
+    "The quantum kitty is sunbathing and contemplating quantum physics."
+} else if hour >= 18 && hour < 22 {
+    "The quantum kitty is in hunting mode, chasing quantum particles."
+} else {
+    "The quantum kitty is dreaming in multiple dimensions simultaneously."
+};
+```
+
+### 5. Add Interactive Elements
+
+Enhance the frontend to allow more interactions:
+
+```javascript
+// Add a pet function to the App class
+petKitty = async () => {
+  const response = await csmcl_qkitty_backend.pet_kitty();
+  this.purr = response.purr;
+  this.happiness = response.happiness;
+  this.#render();
+};
+
+// Add a button in the template
+html`
+  <button @click=${() => this.petKitty()} class="pet-button">
+    Pet the Quantum Kitty
+  </button>
+`
+```
+
+## 🌌 Understanding the Quantum Kitty
+
+For a deeper understanding of the project:
+
+- Read [CSMCL-QUANTUM-KITTY-GUIDE.md](./CSMCL-QUANTUM-KITTY-GUIDE.md) for a comprehensive overview
+- Check [ICP-DECLARATIONS-EXPLAINED.md](./ICP-DECLARATIONS-EXPLAINED.md) to understand how frontend-backend communication works
+
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgements
+
+- [Internet Computer Protocol](https://internetcomputer.org/) for the platform
+- [DFINITY](https://dfinity.org/) for the development tools
+- Quantum physics for the inspiration
+
+---
+
+*The quantum kitty exists in a superposition of states until you interact with it. What state will you find it in?*
