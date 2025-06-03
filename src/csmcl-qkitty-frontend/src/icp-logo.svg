@@ -1,0 +1,25 @@
+<svg width="100" height="60" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .icp-path {
+      fill: none;
+      stroke: #29ABE2;
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-dasharray: 200;
+      stroke-dashoffset: 0;
+      animation: dash 3s linear infinite;
+    }
+    
+    @keyframes dash {
+      0% {
+        stroke-dashoffset: 200;
+      }
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+  </style>
+  
+  <!-- Infinity/ICP-inspired symbol -->
+  <path class="icp-path" d="M25,30 C25,20 35,20 40,30 C45,40 55,40 55,30 C55,20 65,20 70,30 C75,40 85,40 85,30" />
+</svg>

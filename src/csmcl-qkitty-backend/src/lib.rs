@@ -1,7 +1,7 @@
 // Import required libraries for our ICP canister
 use candid::CandidType;      // Enables Candid serialization for cross-language compatibility
 use serde::Deserialize;      // Enables deserialization of data coming into the canister
-use std::time::{SystemTime, UNIX_EPOCH};  // Used for time-based randomization
+use ic_cdk::api::time;       // IC-specific time function that works in WASM environment
 
 /// QuantumResponse represents the structured data our canister returns
 /// 
@@ -24,11 +24,11 @@ pub struct QuantumResponse {
 /// The #[ic_cdk::query] macro exposes this function to the ICP network
 #[ic_cdk::query]
 fn quantum_greet(name: String) -> QuantumResponse {
-    // Generate pseudo-randomness based on current time
-    // In a production app, you might want a better source of randomness
-    // ICP provides ic0.random_bytes() for true randomness
-    let now = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_millis();
-    let random_value = now % 4;
+    // Generate pseudo-randomness based on current IC time
+    // time() returns nanoseconds since 1970-01-01 as a u64
+    // This is IC-specific and works in the WASM environment
+    let now = time();
+    let random_value = (now % 4) as u128;
     
     // Select a greeting based on the random value (simulating quantum superposition)
     // The kitty exists in multiple greeting states until "observed"
@@ -42,7 +42,7 @@ fn quantum_greet(name: String) -> QuantumResponse {
     // Generate a quantum state - representing the kitty's quantum condition
     // These states are inspired by real quantum mechanics concepts
     let states = ["Superposition", "Entangled", "Coherent", "Resonating", "Folded"];
-    let state_index = (now % states.len() as u128) as usize;
+    let state_index = (now as usize % states.len());
     
     // Generate an energy level (1-10)
     // This represents the quantum energy of the kitty's current state

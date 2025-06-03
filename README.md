@@ -2,7 +2,7 @@
 
 A playful quantum-inspired Internet Computer Protocol (ICP) application featuring a kitty that exists in multiple quantum states simultaneously!
 
-![Quantum Kitty](./src/csmcl-qkitty-frontend/assets/qkitty.png)
+![Quantum Kitty](./src/csmcl-qkitty-frontend/assets/qkitty.jpg)
 
 ## 🌟 About The Project
 
