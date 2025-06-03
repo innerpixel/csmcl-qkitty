@@ -7,6 +7,23 @@ type QuantumResponse = record {
     greeting: text;      // The personalized greeting message as text (Candid's string type)
     quantum_state: text; // The current quantum state as text
     energy_level: nat8;  // Energy level from 1-10 as an 8-bit unsigned integer
+    zen_mood: text;      // The current zen mood as text
+};
+
+// Define the wisdom response type
+type WisdomResponse = record {
+    content: text;       // The wisdom content
+    quantum_state: text; // The current quantum state
+    energy_level: nat8;  // Energy level from 1-10
+    zen_mood: text;      // The current zen mood
+};
+
+// Define the kitty state type
+type KittyState = record {
+    quantum_state: text; // The current quantum state
+    energy_level: nat8;  // Energy level from 1-10
+    zen_mood: text;      // The current zen mood
+    last_updated: nat64; // Timestamp of last update
 };
 
 // Define the service interface - this is the contract your canister exposes
@@ -19,6 +36,19 @@ service : {
     // Also marked as a query function for fast execution
     "quantum_greet": (text) -> (QuantumResponse) query;
     
-    // Note: If we had functions that modified state, they would be defined without "query"
-    // Example: "store_interaction": (text) -> ();
+    // Update the global kitty state based on IC time cycles
+    "update_kitty_state": () -> (KittyState);
+    
+    // Generate wisdom based on context and personalization
+    "generate_kitty_wisdom": (text, vec text) -> (WisdomResponse) query;
+    
+    // Template management functions
+    "add_wisdom_template": (text, text) -> ();
+    "add_quantum_adjective": (text, text) -> ();
+    "add_zen_phrase": (text, text) -> ();
+    "get_templates_for_context": (text) -> (vec text) query;
+    
+    // User-kitty bond functions
+    "save_kitty_name": (text) -> ();
+    "get_kitty_name": () -> (opt text) query;
 }

@@ -1,0 +1,408 @@
+/* Quantum Kitty CSS Styles */
+
+:root {
+  --quantum-primary: #6e3bff;
+  --quantum-secondary: #ff3bdb;
+  --quantum-tertiary: #3bffed;
+  --quantum-dark: #1a1a2e;
+  --quantum-light: #f0f0ff;
+  --quantum-error: #ff5252;
+  --quantum-success: #52ff7a;
+  
+  /* Quantum state colors */
+  --state-superposition: #6e3bff;
+  --state-entangled: #ff3bdb;
+  --state-coherent: #3bffed;
+  --state-resonating: #52ff7a;
+  --state-folded: #ffb13b;
+  
+  /* Zen mood colors */
+  --mood-tranquil: #3bffed;
+  --mood-playful: #ffb13b;
+  --mood-curious: #6e3bff;
+  --mood-contemplative: #8a76e5;
+  --mood-enigmatic: #ff3bdb;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--quantum-dark);
+  background-color: var(--quantum-light);
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+h1, h2, h3 {
+  color: var(--quantum-primary);
+}
+
+h1 {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--quantum-primary);
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--quantum-secondary);
+  box-shadow: 0 0 0 3px rgba(110, 59, 255, 0.2);
+}
+
+button, .quantum-button {
+  background-color: var(--quantum-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover, .quantum-button:hover {
+  background-color: #5a2dd9;
+  transform: translateY(-2px);
+}
+
+button:active, .quantum-button:active {
+  transform: translateY(0);
+}
+
+/* Greeting Styles */
+.greeting-container {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.greeting-inactive {
+  color: #666;
+  font-style: italic;
+}
+
+.quantum-active {
+  color: var(--quantum-primary);
+  font-weight: 600;
+  font-size: 1.2rem;
+  animation: quantum-pulse 2s infinite alternate;
+}
+
+.quantum-error {
+  color: var(--quantum-error);
+  font-weight: 600;
+}
+
+@keyframes quantum-pulse {
+  0% {
+    text-shadow: 0 0 5px rgba(110, 59, 255, 0.5);
+  }
+  100% {
+    text-shadow: 0 0 15px rgba(110, 59, 255, 0.8), 0 0 20px rgba(255, 59, 219, 0.4);
+  }
+}
+
+/* Quantum Details Styles */
+.quantum-details {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+  animation: quantum-fade-in 0.5s ease-out;
+}
+
+@keyframes quantum-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.quantum-state-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.quantum-state, .zen-mood, .energy-level {
+  flex: 1;
+  min-width: 150px;
+}
+
+.state-badge, .mood-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  color: white;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+/* Quantum State Badge Colors */
+.state-badge.superposition {
+  background-color: var(--state-superposition);
+}
+
+.state-badge.entangled {
+  background-color: var(--state-entangled);
+}
+
+.state-badge.coherent {
+  background-color: var(--state-coherent);
+}
+
+.state-badge.resonating {
+  background-color: var(--state-resonating);
+}
+
+.state-badge.folded {
+  background-color: var(--state-folded);
+}
+
+/* Zen Mood Badge Colors */
+.mood-badge.tranquil {
+  background-color: var(--mood-tranquil);
+}
+
+.mood-badge.playful {
+  background-color: var(--mood-playful);
+}
+
+.mood-badge.curious {
+  background-color: var(--mood-curious);
+}
+
+.mood-badge.contemplative {
+  background-color: var(--mood-contemplative);
+}
+
+.mood-badge.enigmatic {
+  background-color: var(--mood-enigmatic);
+}
+
+/* Energy Level Styles */
+.energy-meter {
+  display: flex;
+  align-items: flex-end;
+  height: 30px;
+  gap: 3px;
+  margin-top: 0.5rem;
+}
+
+.energy-bar {
+  width: 8px;
+  background-color: var(--quantum-primary);
+  border-radius: 2px;
+  transition: height 0.3s, opacity 0.3s;
+}
+
+.energy-bar.active {
+  background-color: var(--quantum-secondary);
+}
+
+.energy-value {
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+/* Loading and Error States */
+.loading {
+  text-align: center;
+  color: var(--quantum-primary);
+  font-style: italic;
+  padding: 1rem;
+  animation: loading-pulse 1.5s infinite alternate;
+}
+
+@keyframes loading-pulse {
+  0% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.error {
+  text-align: center;
+  color: var(--quantum-error);
+  padding: 1rem;
+  border: 1px solid var(--quantum-error);
+  border-radius: 4px;
+  background-color: rgba(255, 82, 82, 0.1);
+}
+
+/* Authentication Styles */
+.auth-section {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.user-principal {
+  font-family: monospace;
+  background-color: var(--quantum-dark);
+  color: var(--quantum-light);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+/* Name Suggestions */
+.name-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.suggestion {
+  background-color: rgba(110, 59, 255, 0.1);
+  color: var(--quantum-primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.suggestion:hover {
+  background-color: rgba(110, 59, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Quantum Bond Animation */
+.quantum-bond-active {
+  animation: quantum-bond 3s;
+}
+
+@keyframes quantum-bond {
+  0% {
+    box-shadow: 0 0 0 rgba(110, 59, 255, 0);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(110, 59, 255, 0.8), 0 0 50px rgba(255, 59, 219, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(110, 59, 255, 0);
+  }
+}
+
+/* Wisdom Specific Styles */
+.wisdom-container {
+  background-color: rgba(110, 59, 255, 0.05);
+  border-left: 4px solid var(--quantum-primary);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0 8px 8px 0;
+}
+
+.wisdom-content {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--quantum-dark);
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.wisdom-context {
+  font-size: 0.9rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.wisdom-actions, .kitty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: center;
+}
+
+.wisdom-button {
+  background-color: var(--quantum-light);
+  color: var(--quantum-primary);
+  border: 2px solid var(--quantum-primary);
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+
+.wisdom-button:hover {
+  background-color: var(--quantum-primary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.wisdom-request {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .quantum-state-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .wisdom-actions, .kitty-actions {
+    flex-direction: column;
+  }
+}

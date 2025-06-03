@@ -15,6 +15,7 @@ class QuantumKittyController {
     this.currentName = '';
     this.currentState = '';
     this.currentEnergyLevel = 0;
+    this.currentZenMood = '';
     this.kittyName = '';
     
     // Internet Identity related state
@@ -26,6 +27,10 @@ class QuantumKittyController {
     // Initialize auth client and event listeners
     this.initAuth();
     this.setupEventListeners();
+    
+    // Update global state every 30 minutes
+    this.updateGlobalState();
+    setInterval(() => this.updateGlobalState(), 30 * 60 * 1000);
   }
   
   /**
@@ -149,25 +154,31 @@ class QuantumKittyController {
   
   /**
    * Load the user's kitty data from the backend
+   * Retrieves the quantum bond between user and kitty if it exists
    */
   async loadKittyData() {
     try {
-      // TODO: Implement backend call to get user's kitty data
-      // For now, we'll use mock data
+      // Call the backend to check if user has a bonded kitty
+      const savedKittyName = await csmcl_qkitty_backend.get_kitty_name();
       
-      // Mock check if user has a kitty
-      const hasKitty = false; // This would come from the backend
-      
-      if (hasKitty) {
-        // Mock kitty data
-        this.kittyName = 'Qubit'; // This would come from the backend
-        this.currentState = 'Superposition';
-        this.currentEnergyLevel = 7;
+      if (savedKittyName && savedKittyName.length > 0) {
+        // User has a bonded kitty
+        this.kittyName = savedKittyName[0];
+        console.log(`Dimensional bond detected with ${this.kittyName}`);
+        
+        // Get the current kitty state
+        const state = await csmcl_qkitty_backend.update_kitty_state();
+        this.currentState = state.quantum_state;
+        this.currentEnergyLevel = state.energy_level;
+        this.currentZenMood = state.zen_mood;
         
         // Update UI with kitty data
         this.showKittyInfo();
+        
+        // Generate a special reunion greeting
+        this.generateReunionGreeting();
       } else {
-        // Show the kitty naming form
+        // No bond detected, show the kitty naming form
         const kittyNamingForm = document.getElementById('kitty-naming-form');
         if (kittyNamingForm) {
           kittyNamingForm.style.display = 'block';
@@ -189,15 +200,25 @@ class QuantumKittyController {
       // Show loading state
       this.showLoading('Creating quantum bond with your kitty...');
       
-      // TODO: Store kitty name in backend
-      // For now, we'll just call quantum_greet
-      const response = await csmcl_qkitty_backend.quantum_greet(name);
+      // Save kitty name to backend to create a persistent dimensional bond
+      await csmcl_qkitty_backend.save_kitty_name(name);
       
-      // Modify the response to be kitty-specific with quantum-inspired language
-      response.greeting = `Your quantum kitty ${name} has formed a resonant bond with you across dimensions! The quantum field has acknowledged your connection.`;
+      // Get the current kitty state
+      const state = await csmcl_qkitty_backend.update_kitty_state();
+      this.currentState = state.quantum_state;
+      this.currentEnergyLevel = state.energy_level;
+      this.currentZenMood = state.zen_mood;
+      
+      // Generate a wisdom response for the new bond
+      const wisdom = await csmcl_qkitty_backend.generate_kitty_wisdom(name, ['bonding', 'general']);
+      
+      // If the backend doesn't have bonding templates, create a special message
+      if (wisdom.content.includes('meditating deeply')) {
+        wisdom.content = `Your quantum kitty ${name} has formed a resonant bond with you across dimensions! The quantum field has acknowledged your connection.`;
+      }
       
       // Update the UI with the response
-      this.updateQuantumResponse(response);
+      this.updateQuantumResponse(wisdom);
       
       // Add quantum bond animation effect
       const detailsElement = document.getElementById('quantum-details');
@@ -219,6 +240,50 @@ class QuantumKittyController {
   }
   
   /**
+   * Generate a special greeting for returning users with an existing kitty bond
+   * This creates a sense of dimensional continuity and recognition
+   */
+  async generateReunionGreeting() {
+    try {
+      // Show loading state
+      this.showLoading('Quantum bond resonating across dimensions...');
+      
+      // Generate a special reunion wisdom message
+      const reunionContext = 'reunion';
+      const wisdom = await csmcl_qkitty_backend.generate_kitty_wisdom(this.kittyName, [reunionContext, 'general']);
+      
+      // Update the greeting section with a special reunion message
+      const greetingElement = document.getElementById('greeting');
+      if (greetingElement) {
+        greetingElement.className = 'quantum-active reunion-pulse';
+        
+        // If the backend doesn't have reunion templates, create a special message here
+        if (wisdom.content.includes('meditating deeply')) {
+          const reunionPhrases = [
+            `${this.kittyName} recognizes your quantum signature across the dimensional fold!`,
+            `The bond between you and ${this.kittyName} resonates through spacetime.`,
+            `${this.kittyName} purrs with delight as your energies synchronize once again.`,
+            `Your return causes ripples in ${this.kittyName}'s quantum field of awareness.`,
+            `${this.kittyName} has been waiting for you in this dimension.`
+          ];
+          
+          // Select a phrase based on current time for variety
+          const phraseIndex = Math.floor(Date.now() / 1000) % reunionPhrases.length;
+          greetingElement.textContent = reunionPhrases[phraseIndex];
+        } else {
+          greetingElement.textContent = wisdom.content;
+        }
+      }
+      
+      // Create the HTML for the quantum details
+      this.updateQuantumResponse(wisdom);
+      
+    } catch (error) {
+      console.error('Error generating reunion greeting:', error);
+    }
+  }
+  
+  /**
    * Display the kitty information for a returning user
    */
   showKittyInfo() {
@@ -226,7 +291,7 @@ class QuantumKittyController {
     const greetingElement = document.getElementById('greeting');
     if (greetingElement) {
       greetingElement.className = 'quantum-active';
-      greetingElement.textContent = `Welcome back! Your quantum kitty ${this.kittyName} is ${this.currentState.toLowerCase()} with energy level ${this.currentEnergyLevel}.`;
+      greetingElement.textContent = `Welcome back! Your quantum kitty ${this.kittyName} is ${this.currentState.toLowerCase()} with a ${this.currentZenMood.toLowerCase()} zen mood and energy level ${this.currentEnergyLevel}.`;
     }
     
     // Create energy level bars
@@ -235,17 +300,30 @@ class QuantumKittyController {
     // Create the HTML for the quantum details
     const html = `
       <div class="quantum-details">
-        <div class="quantum-state">
-          <h3>Quantum State</h3>
-          <div class="state-badge ${this.currentState.toLowerCase()}">${this.currentState}</div>
+        <div class="quantum-state-container">
+          <div class="quantum-state">
+            <h3>Quantum State</h3>
+            <div class="state-badge ${this.currentState.toLowerCase()}">${this.currentState}</div>
+          </div>
+          
+          <div class="zen-mood">
+            <h3>Zen Mood</h3>
+            <div class="mood-badge ${this.currentZenMood.toLowerCase()}">${this.currentZenMood}</div>
+          </div>
+          
+          <div class="energy-level">
+            <h3>Energy Level</h3>
+            <div class="energy-meter">
+              ${energyBars}
+            </div>
+            <div class="energy-value">${this.currentEnergyLevel}/10</div>
+          </div>
         </div>
         
-        <div class="energy-level">
-          <h3>Energy Level</h3>
-          <div class="energy-meter">
-            ${energyBars}
-          </div>
-          <div class="energy-value">${this.currentEnergyLevel}/10</div>
+        <div class="kitty-actions">
+          <button id="pet-kitty-button" class="quantum-button">Pet ${this.kittyName}</button>
+          <button id="feed-kitty-button" class="quantum-button">Feed ${this.kittyName}</button>
+          <button id="request-wisdom-button" class="quantum-button">Request Quantum Wisdom</button>
         </div>
       </div>
     `;
@@ -254,6 +332,22 @@ class QuantumKittyController {
     const detailsElement = document.getElementById('quantum-details');
     if (detailsElement) {
       detailsElement.innerHTML = html;
+      
+      // Add event listeners to the buttons
+      const petButton = document.getElementById('pet-kitty-button');
+      if (petButton) {
+        petButton.addEventListener('click', () => this.handlePetKitty(this.kittyName));
+      }
+      
+      const feedButton = document.getElementById('feed-kitty-button');
+      if (feedButton) {
+        feedButton.addEventListener('click', () => this.handleFeedKitty(this.kittyName));
+      }
+      
+      const wisdomButton = document.getElementById('request-wisdom-button');
+      if (wisdomButton) {
+        wisdomButton.addEventListener('click', () => this.requestWisdom());
+      }
     }
   }
 
@@ -478,6 +572,113 @@ class QuantumKittyController {
   }
 
   /**
+   * Update the global state from the backend
+   */
+  async updateGlobalState() {
+    try {
+      // Call the backend to update the global kitty state
+      const state = await csmcl_qkitty_backend.update_kitty_state();
+      
+      // Store the state for future interactions
+      this.currentState = state.quantum_state;
+      this.currentEnergyLevel = state.energy_level;
+      this.currentZenMood = state.zen_mood;
+      
+      console.log('Global state updated:', state);
+      
+      // If we're authenticated and have a kitty, update the UI
+      if (this.isAuthenticated && this.kittyName) {
+        this.showKittyInfo();
+      }
+    } catch (error) {
+      console.error('Error updating global state:', error);
+    }
+  }
+  
+  /**
+   * Request wisdom from the quantum kitty
+   * @param {string} context - The context for the wisdom (e.g., 'general', 'birthday', 'team')
+   */
+  async requestWisdom(context = 'general') {
+    try {
+      // Show loading state
+      this.showLoading('Quantum wisdom materializing...');
+      
+      // Call the backend to generate wisdom
+      const wisdom = await csmcl_qkitty_backend.generate_kitty_wisdom(this.kittyName, [context]);
+      
+      // Save state for future interactions
+      this.currentState = wisdom.quantum_state;
+      this.currentEnergyLevel = wisdom.energy_level;
+      this.currentZenMood = wisdom.zen_mood;
+      
+      // Update the greeting section
+      const greetingElement = document.getElementById('greeting');
+      if (greetingElement) {
+        greetingElement.className = 'quantum-active';
+        greetingElement.textContent = wisdom.content;
+      }
+      
+      // Create energy level bars
+      const energyBars = this.renderEnergyBars(wisdom.energy_level);
+      
+      // Create the HTML for the quantum details
+      const html = `
+        <div class="quantum-details">
+          <div class="wisdom-container">
+            <div class="wisdom-content">${wisdom.content}</div>
+            <div class="wisdom-context">${context}</div>
+          </div>
+          
+          <div class="quantum-state-container">
+            <div class="quantum-state">
+              <h3>Quantum State</h3>
+              <div class="state-badge ${wisdom.quantum_state.toLowerCase()}">${wisdom.quantum_state}</div>
+            </div>
+            
+            <div class="zen-mood">
+              <h3>Zen Mood</h3>
+              <div class="mood-badge ${wisdom.zen_mood.toLowerCase()}">${wisdom.zen_mood}</div>
+            </div>
+            
+            <div class="energy-level">
+              <h3>Energy Level</h3>
+              <div class="energy-meter">
+                ${energyBars}
+              </div>
+              <div class="energy-value">${wisdom.energy_level}/10</div>
+            </div>
+          </div>
+          
+          <div class="wisdom-actions">
+            <button class="wisdom-button" data-context="general">General Wisdom</button>
+            <button class="wisdom-button" data-context="birthday">Birthday Wisdom</button>
+            <button class="wisdom-button" data-context="team">Team Wisdom</button>
+          </div>
+        </div>
+      `;
+      
+      // Update the quantum details element
+      const detailsElement = document.getElementById('quantum-details');
+      if (detailsElement) {
+        detailsElement.innerHTML = html;
+        
+        // Add event listeners to wisdom buttons
+        const wisdomButtons = detailsElement.querySelectorAll('.wisdom-button');
+        wisdomButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            const context = button.getAttribute('data-context');
+            this.requestWisdom(context);
+          });
+        });
+      }
+    } catch (error) {
+      console.error('Error requesting wisdom:', error);
+      this.showError(`The quantum wisdom is currently folded: ${error.message}`);
+    }
+  }
+  
+  /**
    * Update the quantum response UI with the data from the backend
    * @param {Object} response - The response from the backend
    */
@@ -485,6 +686,7 @@ class QuantumKittyController {
     // Save state for future interactions
     this.currentState = response.quantum_state;
     this.currentEnergyLevel = response.energy_level;
+    this.currentZenMood = response.zen_mood || 'Tranquil'; // Fallback for older responses
     
     // Update the greeting section
     const greetingElement = document.getElementById('greeting');
@@ -504,6 +706,12 @@ class QuantumKittyController {
           <div class="state-badge ${response.quantum_state.toLowerCase()}">${response.quantum_state}</div>
         </div>
         
+        ${response.zen_mood ? `
+        <div class="zen-mood">
+          <h3>Zen Mood</h3>
+          <div class="mood-badge ${response.zen_mood.toLowerCase()}">${response.zen_mood}</div>
+        </div>` : ''}
+        
         <div class="energy-level">
           <h3>Energy Level</h3>
           <div class="energy-meter">
@@ -511,6 +719,11 @@ class QuantumKittyController {
           </div>
           <div class="energy-value">${response.energy_level}/10</div>
         </div>
+        
+        ${this.isAuthenticated && this.kittyName ? `
+        <div class="wisdom-request">
+          <button id="request-wisdom-button" class="quantum-button">Request Quantum Wisdom</button>
+        </div>` : ''}
       </div>
     `;
     
@@ -518,6 +731,12 @@ class QuantumKittyController {
     const detailsElement = document.getElementById('quantum-details');
     if (detailsElement) {
       detailsElement.innerHTML = html;
+      
+      // Add event listener to wisdom button if it exists
+      const wisdomButton = document.getElementById('request-wisdom-button');
+      if (wisdomButton) {
+        wisdomButton.addEventListener('click', () => this.requestWisdom());
+      }
     }
   }
 

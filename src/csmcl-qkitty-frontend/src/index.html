@@ -4,10 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CSMCL Quantum Kitty</title>
-  <!-- HTMX for dynamic interactions -->
-  <script src="https://unpkg.com/htmx.org@1.9.6"></script>
   <!-- Include our styles -->
   <link rel="stylesheet" href="./index.scss">
+  <link rel="stylesheet" href="./quantum-kitty.css">
 </head>
 <body>
   <main id="app">
@@ -16,55 +15,62 @@
         <h1>CSMCL Quantum Kitty</h1>
         <img src="./logo2.svg" alt="Quantum Kitty logo" style="max-width: 150px;" />
         
-        <!-- Form with HTMX attributes -->
-        <form hx-post="/quantum-greet" hx-target="#quantum-response" hx-swap="outerHTML">
-          <label for="name">Enter your name to meet the quantum kitty: &nbsp;</label>
-          <input id="name" name="name" alt="Name" type="text" placeholder="Your name here" />
-          <button type="submit">Meow!</button>
+        <!-- Authentication Section -->
+        <div id="login-section" class="auth-section">
+          <button id="login-button" class="quantum-button">Connect with Internet Identity</button>
+        </div>
+        
+        <div id="user-section" class="auth-section" style="display: none;">
+          <div class="user-info">
+            <span>Connected as: <span id="user-principal" class="user-principal"></span></span>
+            <button id="logout-button" class="quantum-button">Disconnect</button>
+          </div>
+        </div>
+        
+        <!-- Kitty Naming Form (for authenticated users without a kitty) -->
+        <form id="kitty-naming-form" style="display: none;">
+          <div class="form-group">
+            <label for="kitty-name">Name your quantum kitty:</label>
+            <input type="text" id="kitty-name" name="kitty-name" placeholder="Enter a quantum-inspired name" required>
+            
+            <div class="name-suggestions">
+              <span class="suggestion">Qubit</span>
+              <span class="suggestion">Schrödinger</span>
+              <span class="suggestion">Entangly</span>
+              <span class="suggestion">Photon</span>
+              <span class="suggestion">Higgs</span>
+            </div>
+          </div>
+          
+          <button type="submit" class="quantum-button">Create Quantum Bond</button>
         </form>
         
-        <!-- This section will be replaced by the response -->
-        <section id="greeting" class="greeting-inactive">
-          <p>Enter your name and interact with the quantum kitty!</p>
-        </section>
+        <!-- Quantum Greeting Form (for visitors) -->
+        <form id="quantum-greeting-form">
+          <div class="form-group">
+            <label for="name">Enter your name to meet the quantum kitty:</label>
+            <input type="text" id="name" name="name" placeholder="Your name here" required>
+          </div>
+          
+          <button type="submit" class="quantum-button">Quantum Greeting</button>
+        </form>
         
-        <!-- Target for HTMX to swap with the response -->
-        <div id="quantum-response"></div>
+        <!-- Greeting Display -->
+        <div class="greeting-container">
+          <p id="greeting" class="greeting-inactive">Enter your name and interact with the quantum kitty!</p>
+        </div>
         
-        <!-- Additional interaction buttons -->
+        <!-- Quantum Details -->
+        <div id="quantum-details"></div>
+        
+        <!-- Interaction Buttons (for non-authenticated users) -->
         <div class="interaction-buttons">
-          <button hx-post="/pet-kitty" hx-target="#quantum-response" hx-swap="outerHTML">
-            Pet the Kitty
-          </button>
-          <button hx-post="/feed-kitty" hx-target="#quantum-response" hx-swap="outerHTML">
-            Feed the Kitty
-          </button>
+          <button id="pet-kitty-button" class="quantum-button">Pet the Kitty</button>
+          <button id="feed-kitty-button" class="quantum-button">Feed the Kitty</button>
         </div>
       </div>
     </div>
   </main>
-  
-  <!-- Templates for HTMX responses -->
-  <template id="quantum-response-template">
-    <div id="quantum-response" class="quantum-info">
-      <p class="greeting">${greeting}</p>
-      
-      <div class="quantum-details">
-        <div class="quantum-state">
-          <h3>Quantum State</h3>
-          <div class="state-badge ${quantumState.toLowerCase()}">${quantumState}</div>
-        </div>
-        
-        <div class="energy-level">
-          <h3>Energy Level</h3>
-          <div class="energy-meter">
-            <!-- Energy bars will be generated here -->
-          </div>
-          <div class="energy-value">${energyLevel}/10</div>
-        </div>
-      </div>
-    </div>
-  </template>
   
   <!-- Main script -->
   <script type="module" src="./main.js"></script>
