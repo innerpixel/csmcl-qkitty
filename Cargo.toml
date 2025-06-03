@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "src/csmcl-qkitty-backend"
+]
+resolver = "2"
