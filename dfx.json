@@ -13,7 +13,18 @@
         "src/csmcl-qkitty-frontend/dist"
       ],
       "type": "assets",
-      "workspace": "csmcl-qkitty-frontend"
+      "workspace": "csmcl-qkitty-frontend",
+      "frontend": {
+        "entrypoint": "index.html"
+      },
+      "declarations": {
+        "output": "src/declarations"
+      },
+      "assets": {
+        "error_pages": {
+          "404": "404.html"
+        }
+      }
     },
     "internet_identity": {
       "candid": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity.did",

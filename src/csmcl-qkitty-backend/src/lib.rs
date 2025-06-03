@@ -42,7 +42,8 @@ fn quantum_greet(name: String) -> QuantumResponse {
     // Generate a quantum state - representing the kitty's quantum condition
     // These states are inspired by real quantum mechanics concepts
     let states = ["Superposition", "Entangled", "Coherent", "Resonating", "Folded"];
-    let state_index = (now as usize % states.len());
+    // let state_index = (now as usize % states.len());
+    let state_index = now as usize % states.len();
     
     // Generate an energy level (1-10)
     // This represents the quantum energy of the kitty's current state

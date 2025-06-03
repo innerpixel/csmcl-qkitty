@@ -16,11 +16,235 @@ body {
 }
 
 .quantum-container {
-  background: linear-gradient(145deg, #f0f4ff, #e6eeff);
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.identity-section {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background-color: rgba(37, 117, 252, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  
+  p {
+    margin: 0;
+  }
+  
+  #user-principal {
+    font-family: monospace;
+    font-weight: bold;
+    color: #6a11cb;
+  }
+}
+
+.identity-button {
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(106, 17, 203, 0.4);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(106, 17, 203, 0.6);
+  }
+  
+  &.small {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+
+#kitty-naming-form {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.1) 100%);
+  border-radius: 15px;
+  border: 2px dashed rgba(106, 17, 203, 0.3);
   text-align: center;
+  box-shadow: 0 5px 20px rgba(106, 17, 203, 0.1), inset 0 0 20px rgba(37, 117, 252, 0.05);
+  position: relative;
+  overflow: hidden;
+  
+  // Quantum particle background effect
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle at 10% 20%, rgba(106, 17, 203, 0.05) 0%, transparent 20%),
+                     radial-gradient(circle at 30% 70%, rgba(37, 117, 252, 0.05) 0%, transparent 20%),
+                     radial-gradient(circle at 70% 40%, rgba(106, 17, 203, 0.05) 0%, transparent 20%),
+                     radial-gradient(circle at 90% 80%, rgba(37, 117, 252, 0.05) 0%, transparent 20%);
+    z-index: 0;
+    opacity: 0.7;
+    animation: quantumParticles 20s infinite linear;
+  }
+  
+  .quantum-naming-intro {
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+    
+    p {
+      margin: 0.5rem 0;
+      line-height: 1.5;
+      
+      &:first-child {
+        font-weight: bold;
+        color: #6a11cb;
+        font-size: 1.1rem;
+      }
+    }
+  }
+  
+  .naming-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+    
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+  
+  input {
+    padding: 0.75rem 1.25rem;
+    border: 2px solid rgba(106, 17, 203, 0.3);
+    border-radius: 25px;
+    width: 100%;
+    max-width: 300px;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(106, 17, 203, 0.1);
+    
+    &:focus {
+      outline: none;
+      border-color: rgba(106, 17, 203, 0.8);
+      box-shadow: 0 2px 15px rgba(106, 17, 203, 0.2);
+      background-color: white;
+    }
+    
+    &::placeholder {
+      color: rgba(106, 17, 203, 0.4);
+    }
+  }
+  
+  button {
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(106, 17, 203, 0.4);
+    position: relative;
+    overflow: hidden;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+      opacity: 0;
+      transform: scale(0.5);
+      transition: transform 0.5s, opacity 0.5s;
+    }
+    
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 20px rgba(106, 17, 203, 0.6);
+      
+      &::after {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    &:active {
+      transform: translateY(-1px);
+    }
+  }
+  
+  .naming-suggestions {
+    margin-top: 1rem;
+    position: relative;
+    z-index: 1;
+    
+    p {
+      font-size: 0.9rem;
+      color: rgba(106, 17, 203, 0.7);
+      margin: 0;
+    }
+    
+    .suggestion {
+      display: inline-block;
+      margin: 0 0.3rem;
+      padding: 0.2rem 0.6rem;
+      background: linear-gradient(45deg, rgba(106, 17, 203, 0.1), rgba(37, 117, 252, 0.1));
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background: linear-gradient(45deg, rgba(106, 17, 203, 0.2), rgba(37, 117, 252, 0.2));
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
+
+@keyframes quantumParticles {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
 }
 
 /* Header and Images */
@@ -149,6 +373,23 @@ button:active {
   background: rgba(255, 255, 255, 0.8);
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  position: relative;
+  overflow: hidden;
+  
+  /* Quantum bond animation effect */
+  &.quantum-bond-active::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(106, 17, 203, 0.2) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    animation: quantumBond 3s ease-out forwards;
+    z-index: 0;
+    pointer-events: none;
+  }
 }
 
 .quantum-details {
@@ -247,6 +488,22 @@ button:active {
   color: #d32f2f;
   text-align: center;
   margin: 1rem 0;
+}
+
+/* Quantum Bond Animation */
+@keyframes quantumBond {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
 /* Responsive Design */

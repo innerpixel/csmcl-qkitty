@@ -32,7 +32,33 @@
         <h1>CSMCL Quantum Kitty</h1>
         <img src="/src/logo2.svg" alt="Quantum Kitty logo" style="max-width: 150px;" />
         
-        <!-- Quantum greeting form -->
+        <!-- Internet Identity Login Section -->
+        <div id="identity-section" class="identity-section">
+          <div id="login-section" class="login-button-container">
+            <button id="login-button" class="identity-button">Connect with Internet Identity</button>
+          </div>
+          <div id="user-section" class="user-info" style="display: none;">
+            <p>Connected as: <span id="user-principal">...</span></p>
+            <button id="logout-button" class="identity-button small">Disconnect</button>
+          </div>
+        </div>
+        
+        <!-- Kitty naming form (shown for first-time users) -->
+        <form id="kitty-naming-form" style="display: none;">
+          <div class="quantum-naming-intro">
+            <p>You've discovered a quantum kitty existing across multiple dimensions!</p>
+            <p>To form a quantum bond, give your kitty a name that resonates with its energy:</p>
+          </div>
+          <div class="naming-input-container">
+            <input id="kitty-name" name="kittyName" alt="Kitty Name" type="text" placeholder="Schrödinger, Qubit, etc." />
+            <button type="submit">Form Quantum Bond</button>
+          </div>
+          <div class="naming-suggestions">
+            <p>Suggested names: <span class="suggestion">Qubit</span> <span class="suggestion">Schrödinger</span> <span class="suggestion">Entangla</span> <span class="suggestion">Photon</span></p>
+          </div>
+        </form>
+        
+        <!-- Quantum greeting form (legacy, will be removed later) -->
         <form id="quantum-greeting-form">
           <label for="name">Enter your name to meet the quantum kitty: &nbsp;</label>
           <input id="name" name="name" alt="Name" type="text" placeholder="Your name here" />

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- ICP Infinity Logo -->
+  <path d="M100,150 C100,120 130,120 150,150 C170,180 230,180 250,150 C270,120 300,120 300,150 C300,180 270,180 250,150 C230,120 170,120 150,150 C130,180 100,180 100,150 Z" 
+        fill="none" stroke="#29ABE2" stroke-width="12" stroke-linecap="round" />
+  
+  <!-- Pastel Kitten Body -->
+  <ellipse cx="200" cy="150" rx="40" ry="35" fill="#FFD6E0" />
+  
+  <!-- Kitten Head -->
+  <circle cx="200" cy="130" r="25" fill="#FFD6E0" />
+  
+  <!-- Ears -->
+  <polygon points="185,115 175,95 190,110" fill="#FFA6C9" />
+  <polygon points="215,115 225,95 210,110" fill="#FFA6C9" />
+  
+  <!-- Eyes -->
+  <circle cx="190" cy="125" r="4" fill="#333" />
+  <circle cx="210" cy="125" r="4" fill="#333" />
+  
+  <!-- Cute Blush -->
+  <circle cx="182" cy="132" r="5" fill="#FFA6C9" opacity="0.6" />
+  <circle cx="218" cy="132" r="5" fill="#FFA6C9" opacity="0.6" />
+  
+  <!-- Nose -->
+  <path d="M200,132 L197,136 L203,136 Z" fill="#FF92B1" />
+  
+  <!-- Mouth -->
+  <path d="M197,140 Q200,143 203,140" fill="none" stroke="#333" stroke-width="1.5" />
+  
+  <!-- Paws hugging the infinity symbol -->
+  <circle cx="170" cy="150" r="10" fill="#FFD6E0" />
+  <circle cx="230" cy="150" r="10" fill="#FFD6E0" />
+  
+  <!-- Tail -->
+  <path d="M240,160 Q260,170 255,190" fill="none" stroke="#FFD6E0" stroke-width="10" stroke-linecap="round" />
+  
+  <!-- Animation -->
+  <style>
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    svg {
+      animation: pulse 3s infinite;
+    }
+  </style>
+</svg>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Quantum Kitty Has Phased Out</title>
+  <style>
+    .quantum-404 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+      text-align: center;
+      padding: 2rem;
+    }
+    
+    .quantum-404-title {
+      font-size: 5rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      animation: quantum-pulse 3s infinite alternate;
+    }
+    
+    .quantum-404-subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+    
+    .quantum-kitty-container {
+      width: 300px;
+      height: 300px;
+      margin: 2rem auto;
+      position: relative;
+    }
+    
+    .quantum-kitty-container img {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .quantum-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1; /* Ensure particle container is above the image */
+    }
+    
+    .quantum-particle {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(1px);
+      box-shadow: 0 0 8px rgba(106, 17, 203, 0.6);
+      animation: float 4s infinite;
+    }
+    
+    .home-button {
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(106, 17, 203, 0.4);
+    }
+    
+    .home-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 20px rgba(106, 17, 203, 0.6);
+    }
+    
+    @keyframes quantum-pulse {
+      0% {
+        text-shadow: 0 0 10px rgba(106, 17, 203, 0.5);
+      }
+      100% {
+        text-shadow: 0 0 20px rgba(37, 117, 252, 0.8), 0 0 30px rgba(106, 17, 203, 0.6);
+      }
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+      50% {
+        transform: translate(20px, -20px) scale(1.5);
+      }
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="quantum-404">
+      <h1 class="quantum-404-title">404</h1>
+      <h2 class="quantum-404-subtitle">Oops! The quantum kitty has phased into another dimension</h2>
+      
+      <div class="quantum-kitty-container">
+        <img src="/icp-qkitty.svg" alt="Quantum Kitty in another dimension">
+        <div class="quantum-particles" id="particles"></div>
+      </div>
+      
+      <p>The page you're looking for has collapsed into a quantum singularity.</p>
+      <p>Don't worry! Our quantum kitty is searching through parallel universes to find it.</p>
+      
+      <button class="home-button" onclick="window.location.href='/'">Return to Home Dimension</button>
+    </div>
+  </div>
+
+  <!-- External script to comply with ICP Content Security Policy -->
+  <script src="/404-particles.js"></script>
+</body>
+</html>

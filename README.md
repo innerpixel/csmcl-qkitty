@@ -1,25 +1,29 @@
 # 🐱 CSMCL Quantum Kitty
 
-A playful quantum-inspired Internet Computer Protocol (ICP) application featuring a kitty that exists in multiple quantum states simultaneously!
+A playful quantum-inspired Internet Computer Protocol (ICP) application featuring a kitty that exists in multiple quantum states simultaneously, now with Internet Identity integration for a personalized quantum bond!
 
-![Quantum Kitty](./src/csmcl-qkitty-frontend/assets/qkitty.jpg)
+![Quantum Kitty](./src/csmcl-qkitty-frontend/assets/icp-qkitty.svg)
 
 ## 🌟 About The Project
 
-CSMCL Quantum Kitty is an experimental ICP application that demonstrates the basics of canister development using Rust for the backend and JavaScript for the frontend. The quantum kitty responds with different quantum-themed greetings and exists in various quantum states with fluctuating energy levels.
+CSMCL Quantum Kitty is an experimental ICP application that demonstrates the basics of canister development using Rust for the backend and JavaScript for the frontend. The quantum kitty responds with different quantum-themed greetings and exists in various quantum states with fluctuating energy levels. With the new Internet Identity integration, users can now name their own quantum kitty and form a persistent bond across dimensions!
 
 ## 🚀 Features
 
-- **Quantum-Inspired Greetings**: The kitty responds with different quantum-themed messages
+- **Internet Identity Integration**: Connect with your ICP Internet Identity to create a persistent quantum bond
+- **Personal Quantum Kitty**: Name your own quantum kitty and form a multidimensional connection
+- **Quantum-Inspired Greetings**: The kitty responds with different quantum-themed messages personalized to you
 - **Quantum States**: The kitty exists in different states (Superposition, Entangled, Coherent, etc.)
 - **Energy Levels**: Visual representation of the kitty's quantum energy (1-10)
-- **Modern UI**: Clean, responsive interface with animations and visual feedback
+- **Resonant Interactions**: Pet and feed your kitty to influence its quantum state and energy
+- **Modern UI**: Clean, responsive interface with quantum-inspired animations and visual feedback
 
-## 🛠️ Built With
+## 🔧️ Built With
 
 - **Backend**: Rust + Candid on Internet Computer Protocol
 - **Frontend**: JavaScript with lit-html templating
-- **Styling**: CSS with animations and gradients
+- **Authentication**: Internet Identity integration via @dfinity/auth-client
+- **Styling**: SCSS with quantum-inspired animations and resonant visual effects
 
 ## 🏁 Getting Started
 
